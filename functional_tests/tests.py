@@ -81,7 +81,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertNotEqual(edith_list_url, francis_list_url)
 
         # Ponownie nie ma żednego śladu po liście Edyty
-        page_text = self.browser.find_elements_by_tag_name('body').text
+        page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Kupić pawie pióra', page_text)
         self.assertIn('Kupić mleko', page_text)
 
