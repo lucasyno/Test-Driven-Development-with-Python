@@ -26,7 +26,7 @@ class NewVisitorTest(LiveServerTestCase):
         # Zwróciła uwagę, że tytuł strony i nagłówek zawierają słowo Listy
         self.assertIn('Listy', self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
-        self.assertIn('Twoja', header_text)
+        self.assertIn('Utwórz', header_text)
 
         # Od razu zostaje zachęcona, aby wpisać rzeczy do zrobienia
         inputbox = self.browser.find_element_by_id('id_new_item')
@@ -65,7 +65,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         # Nie znajduję żadych śladów listy Edyty
         self.browser.get(self.live_server_url)
-        page_text = self.browser.find_elements_by_tag_name('body').text
+        page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Kupić pawie pióra', page_text)
         self.assertNotIn('Użyć pawich piór do zrobienia przynęty', page_text)
 
