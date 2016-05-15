@@ -1,9 +1,24 @@
+import sys
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 
 class NewVisitorTest(StaticLiveServerTestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        for arg in sys.argv:
+            if 'liveserver' in arg:
+                cls.server_url = 'http://' + arg.split('=')[1]
+                return
+        super().setUpClass()
+        cls.server_url = cls.live_server_url
+
+    @classmethod
+    def tearDownClass(cls):
+        if cls.server_url == cls.live_server_url:
+            super().tearDownClass()
 
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -21,7 +36,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
     def test_can_start_a_list_and_retrieve_it_later(self):
         # Edyta dowiedziała się o nowej, wspaniałej aplikacji w postaci listy rzeczy do zrobienia
         # Postanowiła więc przejść na stronę główną tej aplikacji
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
 
         # Zwróciła uwagę, że tytuł strony i nagłówek zawierają słowo Listy
         self.assertIn('Listy', self.browser.title)
@@ -64,16 +79,16 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.browser = webdriver.Firefox()
 
         # Nie znajduję żadych śladów listy Edyty
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
         page_text = self.browser.find_element_by_tag_name('body').text
         self.assertNotIn('Kupić pawie pióra', page_text)
         self.assertNotIn('Użyć pawich piór do zrobienia przynęty', page_text)
 
         # Franek tworzy nową listę dodajac nowy element
         # Jego lista jest mniej interesująca niż Edyty
-        input = self.browser.find_element_by_id('id_new_item')
-        input.send_keys('Kupić mleko')
-        input.send_keys(Keys.ENTER)
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Kupić mleko')
+        inputbox.send_keys(Keys.ENTER)
 
         # Franek otrzymuje unikatowy adres url prowadzący do listy
         francis_list_url = self.browser.current_url
@@ -89,7 +104,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
     def test_layout_and_styling(self):
         # Edyta przeszła na stronę główną
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
         self.browser.set_window_size(1024, 768)
 
         # Zauważyła, że pole tekstowe zostało elegancko wyśrodkowane
@@ -109,4 +124,3 @@ class NewVisitorTest(StaticLiveServerTestCase):
             512,
             delta=5
         )
-
