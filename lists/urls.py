@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^(\d+)/$', 'lists.views.view_list', name='view-list'),
     url(r'^(\d+)/add_item$', 'lists.views.add_item', name='add-item'),
     url(r'^new$', 'lists.views.new_list', name='new-list'),
