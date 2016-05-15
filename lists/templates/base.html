@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Listy rzeczy do zrobienia</title>
+    </head>
+    <body>
+        <h1>{% block header_text %}{% endblock %}</h1>
+        <form method="POST" action="{% block form_action %}{% endblock %}">
+            {% csrf_token %}
+            <p style="text-align: center">
+                <input id="id_new_item" name='item_text' placeholder="Wpisz rzecz do zrobienia"/>
+            </p>
+        </form>
+    {% block table %}
+    {% endblock %}
+    </body>
+</html>
