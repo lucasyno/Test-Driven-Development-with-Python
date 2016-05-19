@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.exceptions import ValidationError
 
 from .models import Item, List
 
@@ -14,7 +15,14 @@ def view_list(request, list_id):
 
 def new_list(request):
     list_ = List.objects.create()
-    Item.objects.create(text=request.POST['item_text'], list=list_)
+    item = Item(text=request.POST['item_text'], list=list_)
+    try:
+        item.save()
+        item.full_clean()
+    except ValidationError:
+        list_.delete()
+        error = "Element nie może być pusty"
+        return render(request, 'home.html', {'error': error})
     return redirect('/lists/%d/' % (list_.id,))
 
 
