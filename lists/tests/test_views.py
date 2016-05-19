@@ -7,6 +7,8 @@ from django.utils.html import escape
 from ..views import home_page
 from ..models import Item, List
 
+from unittest import skip
+
 
 class HomePageTest(TestCase):
 
@@ -51,6 +53,17 @@ class ListViewTest(TestCase):
         self.assertContains(response, 'item 2')
         self.assertNotContains(response, 'Element pierwszy innej listy')
         self.assertNotContains(response, 'Element drugi innej listy')
+
+    def test_validation_errors_end_up_on_lists_page(self):
+        list_ = List.objects.create()
+        response = self.client.post(
+            '/lists/%d/' % (list_.id,),
+            data={'item_text': ''})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'list.html')
+        expected_error = escape("Element nie może być pusty")
+        self.assertContains(response, expected_error)
 
 
 class NewListTest(TestCase):
