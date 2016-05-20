@@ -2,7 +2,8 @@ from django import forms
 
 from .models import Item
 
-EMPTY_LIST_ERROR = "Element listy nie może być pusty"
+EMPTY_LIST_ERROR = "Element nie może być pusty"
+
 
 class ItemForm(forms.ModelForm):
 

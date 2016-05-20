@@ -17,9 +17,9 @@
                         <p style="text-align: center">
                             {{ form.text }}
                         </p>
-                        {% if error %}
+                        {% if form.errors %}
                         <div class="form-group has-error">
-                            <span class="help-block">{{ error }}</span>
+                            <span class="help-block">{{ form.text.errors }}</span>
                         </div>
                         {% endif %}
                     </form>
