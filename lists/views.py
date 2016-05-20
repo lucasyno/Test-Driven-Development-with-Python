@@ -17,7 +17,7 @@ def view_list(request, list_id):
             item = Item(text=request.POST['item_text'], list=list_)
             item.full_clean()
             item.save()
-            return redirect('/lists/%d/' % (list_.id,))
+            return redirect(list_)
         except ValidationError:
             error = "Element nie może być pusty"
     return render(request, 'list.html', {'list': list_, 'error': error})
@@ -33,4 +33,4 @@ def new_list(request):
         list_.delete()
         error = "Element nie może być pusty"
         return render(request, 'home.html', {'error': error})
-    return redirect('/lists/%d/' % (list_.id,))
+    return redirect(list_)
