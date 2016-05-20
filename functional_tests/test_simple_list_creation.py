@@ -16,7 +16,7 @@ class NewVisitorTest(FunctionalTest):
         self.assertIn('Utwórz', header_text)
 
         # Od razu zostaje zachęcona, aby wpisać rzeczy do zrobienia
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         self.assertEqual(
             inputbox.get_attribute('placeholder'),
             'Wpisz rzecz do zrobienia'
@@ -35,7 +35,7 @@ class NewVisitorTest(FunctionalTest):
 
         # Na stronie nadal znajduje się pole tekstowe zachęcające do podania kolejnego zadania.
         # Edyta wpisałą 'Użyć pawich piór do zrobienia przynęty' (Edyta jest nezwykle skrupulatna)
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         inputbox.send_keys('Użyć pawich piór do zrobienia przynęty')
         inputbox.send_keys(Keys.ENTER)
 
@@ -58,7 +58,7 @@ class NewVisitorTest(FunctionalTest):
 
         # Franek tworzy nową listę dodajac nowy element
         # Jego lista jest mniej interesująca niż Edyty
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         inputbox.send_keys('Kupić mleko')
         inputbox.send_keys(Keys.ENTER)
 
