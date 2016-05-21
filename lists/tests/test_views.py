@@ -1,14 +1,8 @@
-from django.core.urlresolvers import resolve
 from django.test import TestCase
-from django.http import HttpRequest
-from django.template.loader import render_to_string
 from django.utils.html import escape
 
-from ..views import home_page
 from ..models import Item, List
 from ..forms import ItemForm, EMPTY_LIST_ERROR
-
-from unittest import skip
 
 
 class HomePageTest(TestCase):
